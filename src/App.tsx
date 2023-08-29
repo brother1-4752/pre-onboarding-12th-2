@@ -1,9 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Outlet } from 'react-router-dom';
+import Layout from './components/common/Layout/Layout';
 
 function App() {
-  return <div>APP</div>;
+  return (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
 }
 
 export default App;
