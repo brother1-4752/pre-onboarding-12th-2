@@ -1,14 +1,16 @@
-import { createBrowserRouter } from 'react-router-dom';
 import React from 'react';
+import { createBrowserRouter } from 'react-router-dom';
 
-import { Detail, ErrorBoundary, Home } from '../pages';
 import App from '../App';
+import { ErrorBoundary, IssueDetail, IssueList } from '../pages';
+import { get_react_issue_detail, get_react_issues_list } from '../api/getReactIssuesInfo';
 
 interface IRouter {
   path: string;
   element: React.ReactNode;
   errorElement?: React.ReactNode;
   children?: IRouter[];
+  loader?: (() => any) | (({ params }: any) => any);
 }
 
 const routerData: IRouter[] = [
@@ -19,11 +21,13 @@ const routerData: IRouter[] = [
     children: [
       {
         path: '',
-        element: <Home />,
+        element: <IssueList />,
+        loader: async () => get_react_issues_list(),
       },
       {
-        path: '/detail/:id',
-        element: <Detail />,
+        path: '/issue/:id',
+        element: <IssueDetail />,
+        loader: async ({ params }) => get_react_issue_detail(params.id),
       },
     ],
   },
