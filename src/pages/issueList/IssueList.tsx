@@ -16,8 +16,8 @@ export default function IssueList() {
   const router = useNavigate();
 
   const routeToDetail = (issue: any) => {
-    sessionStorage.setItem('issuesList', JSON.stringify(issuesList));
     sessionStorage.setItem('page', JSON.stringify(page));
+    sessionStorage.setItem('issuesList', JSON.stringify(issuesList));
 
     if (issue !== undefined) {
       router(`/issue/${issue.number}`);
