@@ -14,7 +14,6 @@ export default function IssueList() {
   const targetRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useNavigate();
-  console.log(issuesList);
 
   const routeToDetail = (issue: any) => {
     sessionStorage.setItem('issuesList', JSON.stringify(issuesList));
