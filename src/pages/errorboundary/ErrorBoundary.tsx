@@ -14,6 +14,7 @@ export default function ErrorBoundary() {
     },
   ];
 
+  //라우트에러결과값인데, 옥토킷 에러 상태코드랑 같은건가? 다르다면, 옥토킷 에러 상태코드는 어떻게 전역상태관리 느낌으로 가져올 수 있을까?
   if (isRouteErrorResponse(error)) {
     errorStatus.filter((errorObj) =>
       errorObj.statusCode === error.status ? (

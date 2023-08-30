@@ -80,9 +80,10 @@ export default function IssueList() {
     const observer = new IntersectionObserver(handleIntersect, {
       threshold: 1,
     });
-    if (targetRef.current) {
-      observer.observe(targetRef.current);
-    }
+    //isLoading이 false면 다시 targetRef.current가 활성화되죠? 맞죠? 고수분 있으면 텔미텔미
+
+    observer.observe(targetRef.current as HTMLDivElement);
+
     return () => observer.disconnect();
   }, [handleIntersect, targetRef.current, page, isLoading]);
 
