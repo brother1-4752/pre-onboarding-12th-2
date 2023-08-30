@@ -121,33 +121,32 @@ export default function IssueList() {
 
   return (
     <ListContainer>
-      {issuesList &&
-        issuesList.map((issue: any, index: number) => (
-          <div key={issue.number} className='listitem__container'>
-            <li className='listitem' onClick={() => routeToDetail(issue)}>
-              <div>
-                <h3>
-                  #{issue.number} {issue.title}
-                </h3>
-                <p>
-                  작성자: {issue.user && issue.user.login}, 작성일:{' '}
-                  {makeCreatedData(issue.created_at)}
-                </p>
-              </div>
-              <div>{issue.comments}</div>
-            </li>
-            {(index + 1) % 4 === 0 && (
-              <Link target='_blank' to='https://www.wanted.co.kr/'>
-                <img
-                  style={{ width: '100%' }}
-                  //tsx안에서 함수 돌리는거 싫어서 맨 처음에 유틸함수 만들고, return 위에 전역으로 함수 호출하고 그 값을 변수에 넣어줬는데. 그리고 그 변수를 밑에 src, alt에 사용하고, 이렇게 하면 무한스크롤할 때, 이전 위에 부분들 이미지 소스도 다 바뀌는 에러 현상 발생함
-                  src={`mockAddImage${(Math.floor(index / 4) % 4) + 1}.png`}
-                  alt={`광고이미지 ${(Math.floor(index / 4) % 4) + 1}`}
-                />
-              </Link>
-            )}
-          </div>
-        ))}
+      {issuesList.map((issue: any, index: number) => (
+        <div key={issue.number} className='listitem__container'>
+          <li className='listitem' onClick={() => routeToDetail(issue)}>
+            <div>
+              <h3>
+                #{issue.number} {issue.title}
+              </h3>
+              <p>
+                작성자: {issue.user && issue.user.login}, 작성일:{' '}
+                {makeCreatedData(issue.created_at)}
+              </p>
+            </div>
+            <div>{issue.comments}</div>
+          </li>
+          {(index + 1) % 4 === 0 && (
+            <Link target='_blank' to='https://www.wanted.co.kr/'>
+              <img
+                style={{ width: '100%' }}
+                //tsx안에서 함수 돌리는거 싫어서 맨 처음에 유틸함수 만들고, return 위에 전역으로 함수 호출하고 그 값을 변수에 넣어줬는데. 그리고 그 변수를 밑에 src, alt에 사용하고, 이렇게 하면 무한스크롤할 때, 이전 위에 부분들 이미지 소스도 다 바뀌는 에러 현상 발생함
+                src={`mockAddImage${(Math.floor(index / 4) % 4) + 1}.png`}
+                alt={`광고이미지 ${(Math.floor(index / 4) % 4) + 1}`}
+              />
+            </Link>
+          )}
+        </div>
+      ))}
       {isLoading ? null : <div className='target' ref={targetRef}></div>}
     </ListContainer>
   );

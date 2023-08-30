@@ -1,7 +1,12 @@
-import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
+import {
+  isRouteErrorResponse,
+  useParams,
+  useRouteError,
+} from 'react-router-dom';
 
 export default function ErrorBoundary() {
   const error = useRouteError();
+  const { status } = useParams<string>();
 
   const errorStatus = [
     { statusCode: 301, description: 'Moved permanently' },
@@ -14,9 +19,9 @@ export default function ErrorBoundary() {
     },
   ];
 
-  if (isRouteErrorResponse(error)) {
+  if (isRouteErrorResponse(error) && status !== undefined) {
     errorStatus.filter((errorObj) =>
-      errorObj.statusCode === error.status ? (
+      errorObj.statusCode === JSON.parse(status) ? (
         <div key={errorObj.statusCode}>
           <h1>Status Code : {errorObj.statusCode}</h1>
 
