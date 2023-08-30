@@ -8,7 +8,10 @@ export default function ErrorBoundary() {
     { statusCode: 304, description: 'Not modified' },
     { statusCode: 404, description: 'Resource not found' },
     { statusCode: 410, description: 'Gone' },
-    { statusCode: 422, description: 'Validation failed, or the endpoint has been spammed' },
+    {
+      statusCode: 422,
+      description: 'Validation failed, or the endpoint has been spammed',
+    },
   ];
 
   if (isRouteErrorResponse(error)) {
