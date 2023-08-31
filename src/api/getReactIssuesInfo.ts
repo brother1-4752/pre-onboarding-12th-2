@@ -5,7 +5,6 @@ export type issueListReposResponse =
   Endpoints['GET /repos/{owner}/{repo}/issues']['response'];
 export type issueDetailReposResponse =
   Endpoints['GET /repos/{owner}/{repo}/issues/{issue_number}']['response'];
-
 const octokit = new Octokit({ auth: process.env.REACT_APP_OCTOKIT_TOKEN });
 
 export async function get_react_issues_list(pageNumber?: number) {
@@ -22,8 +21,12 @@ export async function get_react_issues_list(pageNumber?: number) {
       },
     });
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    const statusAppendedUrl = window.location.href + `?status=${error.status}`;
+    if (!window.location.href.includes('?status')) {
+      window.location.href = statusAppendedUrl;
+    }
   }
 }
 
@@ -41,8 +44,14 @@ export async function get_react_issue_detail(issueId: number) {
         },
       }
     );
+    console.log('try구문 안 영역');
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+
+    const statusAppendedUrl = window.location.href + `?status=${error.status}`;
+    if (!window.location.href.includes('?status')) {
+      window.location.href = statusAppendedUrl;
+    }
   }
 }
