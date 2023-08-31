@@ -1,12 +1,8 @@
-import {
-  isRouteErrorResponse,
-  useParams,
-  useRouteError,
-} from 'react-router-dom';
+import { Suspense } from 'react';
 
 export default function ErrorBoundary() {
-  const error = useRouteError();
-  const { status } = useParams<string>();
+  const urlParams = new URLSearchParams(window.location.search);
+  const status = urlParams.get('status');
 
   const errorStatus = [
     { statusCode: 301, description: 'Moved permanently' },
@@ -19,19 +15,21 @@ export default function ErrorBoundary() {
     },
   ];
 
-  if (isRouteErrorResponse(error) && status !== undefined) {
-    errorStatus.filter((errorObj) =>
-      errorObj.statusCode === JSON.parse(status) ? (
-        <div key={errorObj.statusCode}>
-          <h1>Status Code : {errorObj.statusCode}</h1>
+  const ErrorBondary =
+    status &&
+    errorStatus
+      .filter((errorObj) => errorObj.statusCode === parseInt(status))
+      .map((targetObj) => (
+        <div key={targetObj.statusCode}>
+          <h1>Status Code : {targetObj.statusCode}</h1>
 
-          <p>{errorObj.description}</p>
+          <p>{targetObj['description']}</p>
         </div>
-      ) : (
-        <div>범위 밖의 오류 발생</div>
-      )
-    );
-  }
+      ));
 
-  return <div>알 수 없는 오류 발생</div>;
+  return (
+    <Suspense fallback={<div>...Status Code 파악 중에 있습니다...</div>}>
+      {ErrorBondary}
+    </Suspense>
+  );
 }
